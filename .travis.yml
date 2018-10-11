@@ -1,0 +1,19 @@
+language: node_js
+services:
+- docker
+node_js:
+- '10.7'
+before_script:
+- bash scripts/build.sh
+after_success:
+- docker login -u="ashwinath" -p="$DOCKER_PASSWORD"
+- docker push ashwinath/personal-website-3:latest;
+before_install:
+- openssl aes-256-cbc -K $encrypted_fb4f0bd06b47_key -iv $encrypted_fb4f0bd06b47_iv
+  -in travis_rsa.enc -out /tmp/travis_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/travis_rsa
+- ssh-add /tmp/travis_rsa
+env:
+  global:
+    secure: U1s1oD3/TneRmPVAV63JnMHivXePO92OqB9FmFaaeDfmO7hwkxr3KO10x/m5umcMw2m3lfe3LGAbUIa+mzVZ3Xlf+JxBxa9kPgTL+/BiuS/2b7c9qcN2aYzV6fEEoDvpG+Op5VC2Z+ey8seXU5WAqKpt/6pYTjEqQNNUYJW1wkW1KaSa9gppw9mP2Ds8qTXuIdOASjv0uYy5lqZJ2TSWrmHcnQx/zlyhQIS5YO9q5vV0nHkym+UdcUfuDWoXc6npAjL941Oix9hYcjsrufXJEc1D+hUW3tTHe6eksvqg9udno+suLaYsKdDDY6WFbOlRnUmDLlNVm+l9WpvUrQVk7Cya0yRlFlEeEnPvIUXo465rZqDhdSJgpT0PO3sKn1N/UdeDpF+MSkhM3pbxJSieeicAChtoIgyuF31SvhYfC/9pI8oH6iUdMIOGKFtP8TZrh6KS2R6nqpn9ckTOezORd4NYButZex1de4qw+4EMa4nijGlWGy1XjQOUVzRBXsqa9THiWntEewObW+RlLCjMVL+5GV0stHMDfK1Nw6ba4QYfeQWQhQ3/EOFQ20+nRa9QV4mpVI8z6mfdCeQaN4key3ZjwQNXpDQkmdV0zDeUnT33h7F5tQTvOD5QBXBsHZG3z5dexMJ9MjQROFh5h3eVQNWCvByIzr02Wlz2TveJf4w=

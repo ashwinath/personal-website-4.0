@@ -3,14 +3,11 @@ services:
 - docker
 node_js:
 - '10.7'
-before_script:
+script:
 - bash scripts/build.sh
-after_success:
-- docker login -u="ashwinath" -p="$DOCKER_PASSWORD"
-- docker push ashwinath/personal-website-3:latest;
 before_install:
 - openssl aes-256-cbc -K $encrypted_fb4f0bd06b47_key -iv $encrypted_fb4f0bd06b47_iv
-  -in travis_rsa.enc -out /tmp/travis_rsa -d
+  -in travis.enc -out /tmp/travis_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/travis_rsa
 - ssh-add /tmp/travis_rsa
